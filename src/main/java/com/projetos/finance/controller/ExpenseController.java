@@ -34,9 +34,12 @@ public class ExpenseController {
     }
 
     @GetMapping("/All/{id}")
-    public Expense findById(@PathVariable Long id){
-            return service.findExpenseById(id)
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Expense Not Found"));
+    public ResponseEntity<Expense> findById(@PathVariable Long id){
+            try{
+                return ResponseEntity.ok(service.findExpenseById(id));
+            } catch (Exception e) {
+                return ResponseEntity.notFound().build();
+            }
     }
 
     @PostMapping(value="/newExpense")
@@ -51,9 +54,13 @@ public class ExpenseController {
     }
 
 
-    @PutMapping(value = "/{id}")
-    public Expense altExpense(@PathVariable Long id ,@RequestBody Expense expense){
-        return service.altExpense(id, expense);
+    @PutMapping("/update")
+    public ResponseEntity<Expense> update(@RequestBody Expense expense){
+        try{
+            return ResponseEntity.ok(service.updateExpense(expense));
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/All/{id}")

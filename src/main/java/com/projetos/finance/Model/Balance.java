@@ -2,28 +2,41 @@ package com.projetos.finance.Model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 @Entity
-@Table(name="Balance")
+@Table(name="balance")
 public class Balance{
 
     @Id
-    @GeneratedValue(strategy =GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name="year_value")
     private int year;
+    @Column(name="month_value")
     private int month;
-    private double totalIncomes;
-    private double totalExpenses;
-    private double balance;
+    private Double totalIncomes;
+    private Double totalExpenses;
+    private Double balance;
 
     public Balance() {}
 
-    public Balance(int year, int month ,double totalIncomes, double totalExpenses) {
+//    public Balance(Double totalIncomes, Double totalExpenses) {
+//        this.year = LocalDate.now().getYear();
+//        this.month = LocalDate.now().getMonth().ordinal();
+//        this.totalIncomes = totalIncomes;
+//        this.totalExpenses = totalExpenses;
+//        this.balance = totalIncomes - totalExpenses;
+//    }
+
+    public Balance(int year, int month, Double totalIncomes, Double totalExpenses) {
         this.year = year;
         this.month = month;
-        this.totalIncomes = totalIncomes;
         this.totalExpenses = totalExpenses;
+        this.totalIncomes = totalIncomes;
         this.balance = totalIncomes - totalExpenses;
     }
+
 
     public int getYear() {
         return year;
@@ -41,28 +54,28 @@ public class Balance{
         this.month = month;
     }
 
-    public double getTotalExpenses() {
+    public Double getTotalExpenses() {
         return totalExpenses;
     }
 
-    public void setTotalExpenses(double totalExpenses) {
+    public void setTotalExpenses(Double totalExpenses) {
         this.totalExpenses = totalExpenses;
     }
 
-    public double getTotalIncomes() {
+    public Double getTotalIncomes() {
         return totalIncomes;
     }
 
-    public void setTotalIncomes(double totalIncomes) {
+    public void setTotalIncomes(Double totalIncomes) {
         this.totalIncomes = totalIncomes;
     }
 
 
-    public double getBalance() {
+    public Double getBalance() {
         return balance;
     }
 
-    public void setBalance(double totalExpenses, double totalIncomes){
+    public void setBalance(Double totalExpenses, Double totalIncomes){
         this.balance = totalIncomes - totalExpenses;
     }
 }

@@ -3,6 +3,7 @@ package com.projetos.finance.controller;
 import com.projetos.finance.Model.Income;
 import com.projetos.finance.service.IncomeService;
 import jakarta.validation.Valid;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,9 +32,14 @@ public class IncomeController {
     }
 
     @GetMapping("/All/{id}")
-    public Income findById(@PathVariable Long id){
-        return service.findIncomeById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Income Not Found"));
+    public ResponseEntity<Income> findById(@PathVariable Long id){
+
+        try {
+            return ResponseEntity.ok(service.findIncomeById(id));
+
+        }catch (Exception e){
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping(value="/newIncome")
@@ -47,9 +53,14 @@ public class IncomeController {
         }
     }
 
-    @PutMapping(value = "/{id}")
-    public Income altIncome(@PathVariable Long id ,@RequestBody Income income){
-        return service.altIncome(id, income);
+    @PutMapping("/update")
+    public ResponseEntity<Income> update(@RequestBody Income income){
+        try{
+            return ResponseEntity.ok(service.updateIncome(income));
+
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/All/{id}")

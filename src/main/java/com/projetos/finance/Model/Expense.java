@@ -2,8 +2,6 @@ package com.projetos.finance.Model;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
-
 @Entity
 @Table(name = "expense")
 public class Expense {
@@ -15,14 +13,19 @@ public class Expense {
     private String description;
     private int quantity;
     private Double amount;
-    private LocalDate date;
+    @Column(name = "year_value")
+    private int year;
+    @Column(name = "month_value")
+    private int month;
     private String category;
 
-    public Expense(String expenseName, String description, Integer quantity, LocalDate date, String category) {
+    public Expense(String expenseName, String description, int quantity, Double amount, int year, int month, String category) {
         this.expenseName = expenseName;
         this.description = description;
         this.quantity = quantity;
-        this.date = date;
+        this.amount = amount;
+        this.year = year;
+        this.month = month;
         this.category = category;
     }
     public Expense() {
@@ -43,10 +46,6 @@ public class Expense {
 
     public Double getAmount() {
         return amount;
-    }
-
-    public LocalDate getDate() {
-        return date;
     }
 
     public String getCategory() {
@@ -77,11 +76,23 @@ public class Expense {
         this.amount = amount;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
     }
 }

@@ -14,7 +14,7 @@ public class IncomeService {
     @Autowired
     private IncomeRepository repository;
     @Autowired
-    private ErrorAndValidationSerivce validation;
+    private ErrorAndValidationService validation;
 
     Double total;
 
@@ -27,20 +27,21 @@ public class IncomeService {
         return repository.findAll();
     }
 
-    public Optional<Income> findIncomeById(Long id){
-        return repository.findIncomeById(id);
+    public Income findIncomeById(Long id){
+        return repository.findById(id).orElseThrow();
     }
 
-    public Income altIncome(Long id, Income income){
-        Optional<Income> op = findIncomeById(id);
-        Income inc = op.get();
-        inc.setIncomeName(income.getIncomeName());
-        inc.setDescription(income.getDescription());
-        inc.setQuantity(income.getQuantity());
-        inc.setAmount(income.getAmount());
-        inc.setCategory(income.getCategory());
-        inc.setDate(income.getDate());
-        return newIncome(inc);
+    public Income updateIncome(Income income){
+        var entity = repository.findById(income.getId()).orElseThrow();
+        entity.setIncomeName(income.getIncomeName());
+        entity.setDescription(income.getDescription());
+        entity.setQuantity(income.getQuantity());
+        entity.setAmount(income.getAmount());
+        entity.setYear(income.getYear());
+        entity.setMonth(income.getMonth());
+        entity.setCategory(income.getCategory());
+        return repository.save(income);
+
     }
 
     public void deleteIncome(Long id){

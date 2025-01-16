@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.Month;
+import java.time.Year;
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
-public class BalanceService {
+public class BalanceService{
 
     @Autowired
     private BalanceRepository repository;
@@ -20,12 +22,16 @@ public class BalanceService {
     @Autowired
     private ExpenseService expenseService;
 
-    public List<Balance> allBalance(){
-        return repository.findAll();
+    public Balance findByYearAndMonth(int year, int month){
+        return repository.findByYearAndMonth(year, month);
     }
 
-    public Optional<Balance> findBalanceById(Long id){
-        return repository.findBalanceById(id);
+    public List<Balance> findBalancesByYear(int year){
+        return repository.findBalancesByYear(year);
+    }
+
+    public Balance findBalanceByMonth(int month){
+        return repository.findBalanceByMonth(month);
     }
 
     public Double addTotalIncome(Balance balance){
@@ -41,27 +47,11 @@ public class BalanceService {
     }
 
     public Balance addBalance(Balance balance){
-        Double totalIncome = addTotalIncome(balance);
-        Double totalExpense = addTotalExpense(balance);
-
         balance.setYear(LocalDate.now().getYear());
         balance.setMonth(LocalDate.now().getMonthValue());
-        balance.setBalance(totalIncome,totalExpense);
+        balance.setBalance(addTotalIncome(balance), addTotalExpense(balance));
         return repository.save(balance);
     }
 
-    public Balance altBalance(Long id, Balance balance){
-        Optional<Balance> op = findBalanceById(id);
-        Balance exp = op.get();
-        exp.setYear(balance.getYear());
-        exp.setMonth(balance.getMonth());
-        exp.setTotalIncomes(balance.getTotalIncomes());
-        exp.setTotalExpenses(balance.getTotalExpenses());
-        exp.setBalance(balance.getTotalExpenses(), balance.getTotalIncomes());
-        return addBalance(exp);
-    }
 
-    public void deleteBalance(Long id){
-        repository.deleteById(id);
-    }
 }

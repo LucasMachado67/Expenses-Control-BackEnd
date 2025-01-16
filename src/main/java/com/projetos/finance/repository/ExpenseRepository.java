@@ -8,9 +8,8 @@ import java.util.Optional;
 
 public interface ExpenseRepository extends JpaRepository<Expense, Long> {
 
-//    public newExpense();
-
     Optional<Expense> findExpenseById(Long id);
+
     @Query("SELECT SUM(amount) FROM Expense")
     Double getAmountAndMakeTotalExpense();
 }

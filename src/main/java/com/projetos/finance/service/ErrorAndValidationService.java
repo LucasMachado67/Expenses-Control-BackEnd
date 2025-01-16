@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 
 @Service
-public class ErrorAndValidationSerivce {
+public class ErrorAndValidationService {
 
 
     public void validateDataMissingFromExpenseObject(Expense expense) {
@@ -31,10 +31,13 @@ public class ErrorAndValidationSerivce {
         if (expense.getCategory() == null || expense.getCategory().isEmpty()) {
             throw new IllegalArgumentException("Field 'Category' is not filled");
         }
-        if(expense.getDate().isAfter(LocalDate.now())){
-            throw new IllegalArgumentException("Field 'Date' is invalid");
-        }
 
+        if(expense.getYear() > LocalDate.now().getYear()){
+            throw new IllegalArgumentException("Field 'Year' is invalid");
+        }
+        if(expense.getMonth() > LocalDate.now().getMonthValue()){
+            throw new IllegalArgumentException("Field 'Month' is invalid");
+        }
         System.out.println("Data válida");
     }
 
@@ -59,8 +62,11 @@ public class ErrorAndValidationSerivce {
         if (income.getCategory() == null || income.getCategory().isEmpty()) {
             throw new IllegalArgumentException("Field 'Category' is not filled");
         }
-        if(income.getDate().isAfter(LocalDate.now())){
-            throw new IllegalArgumentException("Field 'Date' is invalid");
+        if(income.getYear() > LocalDate.now().getYear()){
+            throw new IllegalArgumentException("Field 'Year' is invalid");
+        }
+        if(income.getMonth() > LocalDate.now().getMonthValue()){
+            throw new IllegalArgumentException("Field 'Month' is invalid");
         }
 
         System.out.println("Data válida");

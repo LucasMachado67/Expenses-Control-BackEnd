@@ -2,7 +2,7 @@ package com.projetos.finance.Model;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
+
 @Entity
 @Table(name = "income")
 public class Income {
@@ -14,15 +14,19 @@ public class Income {
     private String description;
     private int quantity;
     private Double amount;
-    private LocalDate date;
+    @Column(name="year_value")
+    private int year;
+    @Column(name="month_value")
+    private int month;
     private String category;
 
-    public Income(String incomeName, String description,int quantity, Double amount, LocalDate date, String category) {
+    public Income(String incomeName, String description,int quantity, Double amount, int year, int month, String category) {
         this.incomeName = incomeName;
         this.description = description;
         this.quantity = quantity;
         this.amount = amount;
-        this.date = date;
+        this.year = year;
+        this.month = month;
         this.category = category;
     }
     public Income(){
@@ -69,12 +73,20 @@ public class Income {
         this.amount = amount;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public int getMonth() {
+        return month;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
     }
 
     public String getCategory() {

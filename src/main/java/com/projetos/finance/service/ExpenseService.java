@@ -3,9 +3,9 @@ package com.projetos.finance.service;
 import com.projetos.finance.Model.Expense;
 import com.projetos.finance.repository.ExpenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +17,7 @@ public class ExpenseService {
     private ExpenseRepository repository;
 
     @Autowired
-    private ErrorAndValidationSerivce validation;
+    private ErrorAndValidationService validation;
 
     Double total;
 
@@ -30,20 +30,21 @@ public class ExpenseService {
         return repository.findAll();
     }
 
-    public Optional<Expense> findExpenseById(Long id){
-        return repository.findExpenseById(id);
+    public Expense findExpenseById(Long id){
+        return repository.findById(id).orElseThrow();
     }
 
-    public Expense altExpense(Long id, Expense expense){
-        Optional<Expense> op = findExpenseById(id);
-        Expense exp = op.get();
-        exp.setExpenseName(expense.getExpenseName());
-        exp.setDescription(expense.getDescription());
-        exp.setQuantity(expense.getQuantity());
-        exp.setAmount(expense.getAmount());
-        exp.setCategory(expense.getCategory());
-        exp.setDate(expense.getDate());
-        return newExpense(exp);
+    public Expense updateExpense(Expense expense){
+        var entity = repository.findById(expense.getId()).orElseThrow();
+        entity.setExpenseName(expense.getExpenseName());
+        entity.setDescription(expense.getDescription());
+        entity.setQuantity(expense.getQuantity());
+        entity.setAmount(expense.getAmount());
+        entity.setYear(expense.getYear());
+        entity.setMonth(expense.getMonth());
+        entity.setCategory(expense.getCategory());
+        return repository.save(expense);
+
     }
 
     public void deleteExpense(Long id){
