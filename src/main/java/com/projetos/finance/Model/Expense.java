@@ -24,8 +24,8 @@ public class Expense {
         this.description = description;
         this.quantity = quantity;
         this.amount = amount;
-        this.year = year;
         this.month = month;
+        this.year = year;
         this.category = category;
     }
     public Expense() {

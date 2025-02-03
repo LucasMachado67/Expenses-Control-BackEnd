@@ -35,6 +35,7 @@ public class BalanceServiceTest {
 
     private Balance balance;
 
+
     @BeforeEach
     public void setup(){
         balance = new Balance(
@@ -43,7 +44,11 @@ public class BalanceServiceTest {
                 4000.0,
                 3000.0
         );
+
+
     }
+
+
 
 
     @Test

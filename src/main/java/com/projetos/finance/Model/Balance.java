@@ -2,7 +2,7 @@ package com.projetos.finance.Model;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
+
 
 @Entity
 @Table(name="balance")
@@ -21,13 +21,6 @@ public class Balance{
 
     public Balance() {}
 
-//    public Balance(Double totalIncomes, Double totalExpenses) {
-//        this.year = LocalDate.now().getYear();
-//        this.month = LocalDate.now().getMonth().ordinal();
-//        this.totalIncomes = totalIncomes;
-//        this.totalExpenses = totalExpenses;
-//        this.balance = totalIncomes - totalExpenses;
-//    }
 
     public Balance(int year, int month, Double totalIncomes, Double totalExpenses) {
         this.year = year;
@@ -71,11 +64,12 @@ public class Balance{
     }
 
 
+
     public Double getBalance() {
         return balance;
     }
 
-    public void setBalance(Double totalExpenses, Double totalIncomes){
+    public void setBalance(Double totalIncomes, Double totalExpenses){
         this.balance = totalIncomes - totalExpenses;
     }
 }

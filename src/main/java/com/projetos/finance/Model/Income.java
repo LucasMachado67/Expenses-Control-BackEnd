@@ -29,9 +29,21 @@ public class Income {
         this.month = month;
         this.category = category;
     }
+
+    public Income(Long id,String incomeName, String description,int quantity, Double amount, int year, int month, String category) {
+        this.id = id;
+        this.incomeName = incomeName;
+        this.description = description;
+        this.quantity = quantity;
+        this.amount = amount;
+        this.year = year;
+        this.month = month;
+        this.category = category;
+    }
     public Income(){
 
     }
+
 
     public Long getId() {
         return id;

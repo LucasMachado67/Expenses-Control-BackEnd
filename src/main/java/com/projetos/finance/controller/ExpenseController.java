@@ -2,14 +2,13 @@ package com.projetos.finance.controller;
 
 import com.projetos.finance.Model.Expense;
 import com.projetos.finance.service.ExpenseService;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.util.Optional;
+import java.util.List;
 
 
 @RestController
@@ -19,7 +18,7 @@ public class ExpenseController {
     @Autowired
     private ExpenseService service;
 
-    @GetMapping("/All")
+    @GetMapping("/all")
     public ResponseEntity<?> allExpenses(){
         try {
             Iterable<Expense> expenses = service.allExpenses();
@@ -33,7 +32,12 @@ public class ExpenseController {
         }
     }
 
-    @GetMapping("/All/{id}")
+    @GetMapping("/number")
+    public Double totalExpense(){
+        return service.getTotalExpense();
+    }
+
+    @GetMapping("/{id}")
     public ResponseEntity<Expense> findById(@PathVariable Long id){
             try{
                 return ResponseEntity.ok(service.findExpenseById(id));
@@ -42,7 +46,8 @@ public class ExpenseController {
             }
     }
 
-    @PostMapping(value="/newExpense")
+    @Transactional
+    @PostMapping(value="/new")
     public ResponseEntity<?> addNewExpense(@Valid  @RequestBody Expense expense){
         try {
             return ResponseEntity.ok(service.newExpense(expense));
@@ -63,8 +68,14 @@ public class ExpenseController {
         }
     }
 
-    @DeleteMapping("/All/{id}")
+    @DeleteMapping("/{id}")
     public void deleteExpense(@PathVariable Long id) {
         service.deleteExpense(id);
+    }
+
+    @GetMapping("/{category}")
+    public List<Expense> selectPerCategory(@PathVariable String category){
+
+        return service.selectExpensesPerCategory(category);
     }
 }
